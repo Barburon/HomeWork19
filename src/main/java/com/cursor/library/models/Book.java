@@ -7,7 +7,7 @@ public class Book {
     private String bookId;
     private String name;
     private String description;
-    private List<String > authors;
+    private List<String> authors;
     private int yearOfPublication;
     private int numberOfWords;
     private int rating;
@@ -111,5 +111,18 @@ public class Book {
         result = 31 * result + numberOfWords;
         result = 31 * result + rating;
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Book{" +
+                "bookId='" + bookId + '\'' +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", authors=" + authors +
+                ", yearOfPublication=" + yearOfPublication +
+                ", numberOfWords=" + numberOfWords +
+                ", rating=" + rating +
+                '}';
     }
 }
