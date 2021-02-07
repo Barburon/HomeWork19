@@ -1,10 +1,15 @@
 package com.cursor.library.models;
 
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
 import java.util.List;
 
 /**
  * Used for book creation in some particular method.
  */
+@Builder
 public class CreateBookDto {
 
     private String name;
@@ -15,6 +20,15 @@ public class CreateBookDto {
     private int rating;
 
     public CreateBookDto() {
+    }
+
+    public CreateBookDto(String name, String description, List<String> authors, int yearOfPublication, int numberOfWords, int rating) {
+        this.name = name;
+        this.description = description;
+        this.authors = authors;
+        this.yearOfPublication = yearOfPublication;
+        this.numberOfWords = numberOfWords;
+        this.rating = rating;
     }
 
     public String getName() {
@@ -63,5 +77,17 @@ public class CreateBookDto {
 
     public void setRating(int rating) {
         this.rating = rating;
+    }
+
+    @Override
+    public String toString() {
+        return "CreateBookDto{" +
+                "name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", authors=" + authors +
+                ", yearOfPublication=" + yearOfPublication +
+                ", numberOfWords=" + numberOfWords +
+                ", rating=" + rating +
+                '}';
     }
 }

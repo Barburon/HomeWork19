@@ -16,10 +16,14 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @ExtendWith(MockitoExtension.class)
+
 public class BookServiceTest {
 
     private BookService bookService;
@@ -35,7 +39,7 @@ public class BookServiceTest {
     void getBookByIdSuccessTest() {
         String bookId = "book-id";
 
-        Mockito.when(bookDao.getById(bookId)).thenReturn(new Book(bookId));
+        when(bookDao.getById(bookId)).thenReturn(new Book(bookId));
 
         Book bookFromDB = bookService.getById(bookId);
 
@@ -69,48 +73,41 @@ public class BookServiceTest {
 
     @Test
     void getValidateBookNameExpectBookNameIsTooLongExceptionTest() {
-        String bookName = " ";
-        for (int i = 0; i < 10; i++) {
-            bookName += bookName;
-        }
 
-        String finalBookName = bookName;
+        StringBuilder bookName = new StringBuilder();
+        for (int i = 0; i < 1001; i++) {
+            bookName.append(" ");
+        }
         assertThrows(
                 BookNameIsTooLongException.class,
-                () -> bookService.getValidatedBookName(finalBookName)
+                () -> bookService.getValidatedBookName(bookName.toString())
         );
     }
 
     @Test
     void createBookTest() {
-        CreateBookDto bookDto = new CreateBookDto();
-
-        bookDto.setName("BookDtoName");
-        String name = "BookDtoName";
-        assertEquals(name, bookDto.getName());
-
-        bookDto.setDescription("BookDto description");
-        String description = "BookDto description";
-        assertEquals(description, bookDto.getDescription());
-
         List<String> authors = Arrays.asList("Author1", "Author2", "Author3");
-        bookDto.setAuthors(authors);
-        List<String> authors2 = Arrays.asList("Author1", "Author2", "Author3");
-        assertEquals(authors2, bookDto.getAuthors());
+        CreateBookDto bookDto = CreateBookDto.builder()
+                .name("BookDtoName")
+                .description("BookDto description")
+                .authors(authors)
+                .yearOfPublication(2015)
+                .numberOfWords(378)
+                .rating(5)
+                .build();
 
-        Integer numberOfWords = 678;
-        bookDto.setNumberOfWords(678);
-        assertEquals(numberOfWords, bookDto.getNumberOfWords());
+        Book book2 = Book.builder()
+                .bookId("bookId")
+                .name(bookDto.getName())
+                .description(bookDto.getDescription())
+                .authors(bookDto.getAuthors())
+                .yearOfPublication(bookDto.getYearOfPublication())
+                .numberOfWords(bookDto.getNumberOfWords())
+                .rating(bookDto.getRating())
+                .build();
+        when(bookDao.addBook(any(Book.class))).thenReturn(book2);
+        Book book1 = bookService.createBook(bookDto);
 
-        Integer rating = 3;
-        bookDto.setRating(3);
-        assertEquals(rating, bookDto.getRating());
-
-        Integer year = 2015;
-        bookDto.setYearOfPublication(2015);
-        assertEquals(year, bookDto.getYearOfPublication());
-
-        assertNotNull(bookDto);
-
+        assertEquals(book1, book2);
     }
 }
