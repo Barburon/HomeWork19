@@ -73,14 +73,9 @@ public class BookServiceTest {
 
     @Test
     void getValidateBookNameExpectBookNameIsTooLongExceptionTest() {
-
-        StringBuilder bookName = new StringBuilder();
-        for (int i = 0; i < 1001; i++) {
-            bookName.append(" ");
-        }
         assertThrows(
                 BookNameIsTooLongException.class,
-                () -> bookService.getValidatedBookName(bookName.toString())
+                () -> bookService.getValidatedBookName(" ".repeat(1001))
         );
     }
 
