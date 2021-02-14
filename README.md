@@ -1,7 +1,7 @@
 # HomeWork19
-##Simple REST-app on H2DB with Spring Security
+## Simple REST-app on H2DB with Spring Security
 
-####For testing app use you should use POSTMAN and next links:
+#### For testing app use you should use POSTMAN and next links:
 http://localhost:8080/users/login   -  generate token (PostMapping)
 
 http://localhost:8080/helloworld - access admin, user (GetMapping)
