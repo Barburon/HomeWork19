@@ -70,7 +70,7 @@ public class BookController {
     }
 
     @DeleteMapping(value = "/books/{bookId}", produces = MediaType.APPLICATION_JSON_VALUE)
-    @Secured("ROLE_DELETE")
+    @Secured({"ROLE_DELETE"})
     public ResponseEntity<Book> deleteById(
             @PathVariable(value = "bookId") String bookId
     ) {

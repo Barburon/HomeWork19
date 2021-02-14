@@ -13,7 +13,6 @@ import javax.annotation.PostConstruct;
 import java.util.Set;
 
 @SpringBootApplication
-@EnableGlobalMethodSecurity(securedEnabled = true)
 public class LibraryApplication {
 
     private final UserRepository userRepository;
