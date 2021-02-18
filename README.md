@@ -1,5 +1,4 @@
-# HomeWork19
-## Simple REST-app on H2db with Spring Security
+# Simple REST-app on H2db with Spring Security
 
 #### For testing app you should use POSTMAN and next links:
 http://localhost:8080/users/login (with body which includes username and password)  -  generate token (PostMapping)
