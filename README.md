@@ -16,7 +16,6 @@ http://localhost:8080/books/{bookId} (Bearer token auth) - access admin  (Delete
 Username: user   |   admin
 --------------------------
 Password: password | admin
-
-
+--------------------------
 
 
